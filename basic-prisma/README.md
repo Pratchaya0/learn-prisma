@@ -22,6 +22,27 @@ npx prisma init --datasource-provider sqlite
 
 ref: [prisma](https://www.prisma.io/docs/accelerate/getting-started)
 
+Example Model:
+```bash
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  posts Post[]
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String 
+  content String?
+  published Boolean @default(false)
+
+  // relation with User
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+}
+```
+
 Migration CLI:
 
 ```bash
@@ -91,3 +112,4 @@ const user = await prisma.user.delete({
     },
 });
 ```
+
